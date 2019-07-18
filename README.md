@@ -130,6 +130,18 @@ _Is slow for big numbers. Pattern matching is not implemented efficiently and no
 
 ![Histogram with blacklist 100k samples](doc/testhistwb100k.png)
 
+## run tests
+
+```
+ls -1 *_test.py | xargs -n1 /usr/bin/python3
+```
+
+I usually use it with a file watcher like [reflex](https://github.com/cespare/reflex).
+
+```
+reflex -r '\.py$' -- bash -c "printf '/%.0s' {1..70}; echo -e '\\n\\n\\n\\n'; ls -1 *_test.py | xargs -n1 python3"
+```
+
 # notes
 
 I was interested in and experimented with shuffling algorithms (fisher-yates and sattolo ([https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle)) and additionally tried playing lotto, 6 of 49. Then I found out it was good to bet numbers nobody else does. Your chances are not increasing but in case you do win, you will get more money.
