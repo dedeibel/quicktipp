@@ -102,10 +102,10 @@ _When you want to know if you could have won._
 ./main.py -2 -t 5000
 ```
 
-![Histogram 2D with blacklist 5k samples](docs/testwb5k.png)
+![Histogram 2D with blacklist 5k samples](doc/testwb5k.png)
 
 _Distribution is not equal due to blacklist entries. The date blacklist entry having the most impact. Use -b to skip the blacklist. Leave -2 to get a boring bar chart._
-
+l
 _Is slow for big numbers. Pattern matching is not implemented efficiently and not parallelized ... let's say was not so successfull using python, given my basic python skills. Not important for daily use anyway._
 
 ## Show drawn numbers distribution
@@ -114,21 +114,21 @@ _Is slow for big numbers. Pattern matching is not implemented efficiently and no
 ./main.py -d 25
 ```
 
-![Histogram with blacklist 25 samples](docs/distr.png)
+![Histogram with blacklist 25 samples](doc/distr.png)
 
 # distribution
 
 ## 100k samples with blacklist
 
-![Histogram 2D with blacklist 100k samples](docs/testwb100k.png)
+![Histogram 2D with blacklist 100k samples](doc/testwb100k.png)
 
 ## 10m samples without blacklist
 
-![Histogram 2D without blacklist 10m samples](docs/testnb10m.png)
+![Histogram 2D without blacklist 10m samples](doc/testnb10m.png)
 
 ## 100k samples bar chart
 
-![Histogram with blacklist 100k samples](docs/testhistwb100k.png)
+![Histogram with blacklist 100k samples](doc/testhistwb100k.png)
 
 # notes
 
