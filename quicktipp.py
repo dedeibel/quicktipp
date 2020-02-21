@@ -7,6 +7,7 @@ class Quicktipp:
         self.tipps = []
         self.skipped = []
         self.verbose = 1
+        self.print_index_numbers = False
 
     # Configure verbosity of "str"
     # 0 - no output
@@ -14,6 +15,9 @@ class Quicktipp:
     # 2 - output with ascii art
     def set_verbose(self, verbose):
         self.verbose = verbose
+
+    def set_print_index_numbers(self, print_index_numbers):
+        self.print_index_numbers = print_index_numbers
 
     # Do not test tipps for backlist entries
     def set_ignore_blacklist(self, ignore):
@@ -60,6 +64,8 @@ class Quicktipp:
                     s += "\n"
                 if self.verbose > 1:
                     s += "#%d\n" % nr
+                elif self.print_index_numbers:
+                    s += "%3d: " % nr
                 nr += 1
                 s += tipp.str_pretty(self.verbose)
         return s

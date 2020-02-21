@@ -46,6 +46,8 @@ if __name__ =='__main__':
             help='Does not write to journal ~/.quicktipp.log in this run (also does not in -t or -d)')
     parser.add_argument('-2', '--two-dee', dest='two_dee', action='store_true', # ;-)
             help='Print distribution histogramm as 2D map of the number coordinates')
+    parser.add_argument('-n', '--numbers', dest='print_numbers', action='store_true',
+            help='Prints an index before the numbers')
     parser.add_argument('-d', '--dist', dest='show_distribution', action='store_true',
                        help='Shows the distribution of the normally generated and displayed results')
     
@@ -65,6 +67,7 @@ if __name__ =='__main__':
     q = Quicktipp()
     q.set_ignore_blacklist(args.no_blacklist)
     q.set_verbose(args.verbose)
+    q.set_print_index_numbers(args.print_numbers)
     q.prepare(numbers)
     print(str(q))
 
