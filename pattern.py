@@ -65,6 +65,23 @@ class Pattern:
     def __str__(self):
         return self.str_pretty(1)
 
+    def __eq__(self, other): 
+        if not isinstance(other, Pattern):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        # Note: name is not compared!
+        # Lazy man's deep equals using str... *sigh* we only have number
+        # contents
+        return len(self.coords) == len(other.coords) and str(self.coords) == str(other.coords) and self.misses == other.misses
+
+
+    def __hash__(self):
+        # Note: name is not compared!
+        # wow, using str here again since python lists seem not that useful
+        # here (no deep hashing capabilities by default)
+        return hash((str(self.coords), self.misses))
+
     def str_pretty(self, verbosity = 1):
         s = ''
 

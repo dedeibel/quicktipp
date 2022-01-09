@@ -13,6 +13,10 @@ class BlacklistItem:
         self.name = name
         self.misses = misses
 
+        # Make sure it starts at 0x0
+        min_coord = coords_min(coords)
+        coords = relocate(coords, min_coord)
+
         self.main_pattern = Pattern(name, coords, misses)
         self.patterns = [self.main_pattern]
 
@@ -25,6 +29,7 @@ class BlacklistItem:
             min_coord = coords_min(rotated_coords)
             relocated = relocate(rotated_coords, min_coord)
             self.patterns.append(Pattern(self.name +" "+ r.get_suffix(), relocated, self.misses))
+        self.patterns = list(dict.fromkeys(self.patterns)) # reduce duplicates 
 
     def get_name(self):
         return self.name
@@ -115,18 +120,26 @@ class BlacklistItemDate:
     def matches(self, tipp):
         numbers = tipp.numbers()
 
-        if not 19 in numbers and not 20 in numbers:
+        if not 19 in numbers and not 20 in numbers and not 21 in numbers:
             return False
 
-        # Recognize date-like numbers
+        anylt13 = any(num <= 12 for num in numbers)
+        # no month specified
+        if not anylt13:
+            return False
+
+        # Recognize day-like numbers
         le31 = sum(num <= 31 for num in numbers)
-        # if all numbers except two are less than 31 and two of them less than 13
-        if le31 >= 3 and le31 < 6 and any(num <= 12 for num in numbers):
-            # Falls dann noch 19xx oder 20xx vor kommt, skipp
-            if 19 in numbers:
+        # If 19(xx) is present just require le31to be three, the year might be
+        # larger than 20
+        if 19 in numbers:
+            has_gt_20 = any(num >= 20 for num in numbers)
+            if le31 >= 3 and has_gt_20:
                 return True
-            if le31 >= 4: # and 20 in numbers
-                return True
+        elif le31 >= 4:
+            return True
+
+        return False
 
     def __str__(self):
         return self.str_pretty(1)

@@ -21,13 +21,19 @@ from helper import calc_coord
 # 
 # misses: Amount of coords that don't have to match  
 # transformations: List of transformations that should be applied to the
-# pattern before testing. L, R - Rotate. F - Flip. M - Mirror
+# pattern before testing. L, R - Rotate, F - Flip, M - Mirror, LM - Left then
+#                         Mirror , RM - Right then Mirror
 class BlacklistParser:
     transformations = {
-            'L': RotateLeft(),
-            'R': RotateRight(),
-            'M': Mirror(),
-            'F': Flip()
+            'L90':   L90(),
+            'L180':  L180(),
+            'R90':   R90(),
+            'R180':  R180(),
+            'M':     Mirror(),
+            'ML90':  ML90(),
+            'ML180': ML180(),
+            'MR90':  MR90(),
+            'MR180': MR180(),
             }
 
     def parse(pattern):
@@ -58,12 +64,16 @@ class BlacklistParser:
                 name = result.group(1)
                 continue
             result = re.match(r'\s*transform\s+(.*)', line)
+            # Note: ignore transform config, apply them all now and filter
+            # duplicates later
             if result:
-                transform_suffixes = result.group(1).split(',')
-                for transformation_suffix in transform_suffixes:
-                    transformation_suffix = transformation_suffix.strip()
-                    transform.append(BlacklistParser.transformations[transformation_suffix])
+                transform.extend(BlacklistParser.transformations.values()) 
                 continue
+            #    transform_suffixes = result.group(1).split(',')
+            #    for transformation_suffix in transform_suffixes:
+            #        transformation_suffix = transformation_suffix.strip()
+            #        transform.append(BlacklistParser.transformations[transformation_suffix])
+            #    continue
 
             x = 0
             for char in line:

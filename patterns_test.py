@@ -11,6 +11,14 @@ class TestPatterns(unittest.TestCase):
         self.assertTrue(bl.contains(Tipp([1, 2, 3, 4, 5])))
         self.assertTrue(bl.contains(Tipp([1, 2, 3, 4])))
         self.assertTrue(bl.contains(Tipp([1,    3, 4, 5])))
+        self.assertTrue(bl.contains(Tipp([37, 38, 39])))
+
+    def test_roto(self):
+        bl = Blacklist()
+
+        self.assertTrue(bl.contains(Tipp([29, 37, 45])))
+        self.assertTrue(bl.contains(Tipp([31, 37, 43])))
+        self.assertTrue(bl.contains(Tipp([30, 38, 46])))
 
     def test_diagonal(self):
         bl = Blacklist()
@@ -37,6 +45,15 @@ class TestPatterns(unittest.TestCase):
         bl = Blacklist()
 
         self.assertTrue(bl.contains(Tipp([5, 10, 15, 20, 25, 30])))
+
+    def test_zc(self):
+        bl = Blacklist()
+
+        self.assertTrue(bl.contains(Tipp([8,   9, 17, 18])))
+        self.assertTrue(bl.contains(Tipp([10, 11, 15, 16])))
+
+        self.assertTrue(bl.contains(Tipp([10, 17, 23, 30])))
+        self.assertTrue(bl.contains(Tipp([ 9, 16, 24, 31])))
 
 if __name__ == '__main__':
     unittest.main()

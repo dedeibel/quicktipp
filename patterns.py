@@ -1,17 +1,18 @@
 from blacklistparser import BlacklistParser
 
+#
+# Note: specific transforms do not mean much at this point (anymore), all available
+# transformations are automatically applied and same results filtered
+#
+
 # Some patterns and number I found on the net or came up with, ymmv
 PATTERNS = [
     """
-    name diagonal
-    transform R
-    missing 2
-    x..
-    .x.
+    name rotor
+    transform M
+    x
+    .x
     ..x
-    ...x
-    ....x
-    .....x
     """,
     """
     name box
@@ -29,28 +30,24 @@ PATTERNS = [
     """
     name line
     transform R
-    missing 1
-    xxxxx
+    xxx
     """,
     """
     name sequence over borders
-    transform R, L, F
-    missing 2
+    transform R, M, RM
     xxx....
     ....xxx
     """,
     """
     name sequence over borders-b
-    transform R, L, F
-    missing 2
+    transform R, M, RM
     xxx....
     .......
     ....xxx
     """,
     """
     name sequence over borders-c
-    transform R, L, F
-    missing 2
+    transform R, M, RM
     xxx....
     .......
     .......
@@ -58,8 +55,7 @@ PATTERNS = [
     """,
     """
     name sequence over borders-d
-    transform R, L, F
-    missing 2
+    transform R, M, RM
     xxx....
     .......
     .......
@@ -68,8 +64,7 @@ PATTERNS = [
     """,
     """
     name sequence over borders-e
-    transform R, L, F
-    missing 2
+    transform R, M, RM
     xxx....
     .......
     .......
@@ -79,8 +74,7 @@ PATTERNS = [
     """,
     """
     name sequence over borders-f
-    transform R, L, F
-    missing 2
+    transform R, M, RM
     xxx....
     .......
     .......
@@ -141,7 +135,7 @@ PATTERNS = [
     """,
     """
     name pisa
-    transform F
+    transform R, M, RM
     missing 1
     ..x
     .xx
@@ -159,7 +153,6 @@ PATTERNS = [
     """,
     """
     name cross-b
-    transform R, L, F
     ...x...
     x..x..x
     ...x...
@@ -182,21 +175,21 @@ PATTERNS = [
     """,
     """
     name snail-a
-    transform R, L, F
+    transform R, M, RM
     missing 1
     .xxx
     xxx
     """,
     """
     name snail-b
-    transform R, L, F
+    transform R, M, RM
     missing 1
     ...xxx
     xxx...
     """,
     """
     name stairs
-    transform R, L, F
+    transform R, M, RM
     missing 1
     xx
     ..x..
@@ -204,27 +197,27 @@ PATTERNS = [
     """,
     """
     name z
-    transform R, L, F
+    transform R, M, RM
     xx...
     .....
     ...xx
     """,
     """
     name z-b
-    transform R, L, F
+    transform R, M, RM
     xx..
     ....
     ..xx
     """,
     """
     name z-c
-    transform R, L, F
+    transform R, M, RM
     xx..
     ..xx
     """,
     """
     name z-d
-    transform R, L, F
+    transform R, M, RM
     xx.
     ...
     .xx
@@ -275,7 +268,7 @@ PATTERNS = [
     """,
     """
     name checked
-    transform R, L, F, M
+    transform R, L, F, M, RM, LM
     missing 1
     ...x
     ..x.x
@@ -373,7 +366,14 @@ PATTERNS = [
     """,
     """
     name s
-    transform R, L, F, M
+    transform R, L, F
+    .xx
+    .x.
+    xx.
+    """,
+    """
+    name s big
+    transform R, L, F, M, RM, LM
     missing 1
     .x.
     x..
@@ -423,17 +423,10 @@ PATTERNS = [
     x.....x
     """,
     """
-    name rotor
-    transform F, M
-    x
-    .x
-    ..x
-    """,
-    """
-    name little cup
-    transform F
-    x.x
-    .x.
+    name little check board
+    transform R, M, RM
+    x.x.
+    .x.x
     """,
     """
     name x-a
@@ -444,6 +437,7 @@ PATTERNS = [
     """,
     """
     name x-b
+    transform R
     missing 1
     x...x
     .x.x
@@ -451,6 +445,7 @@ PATTERNS = [
     """,
     """
     name x-c
+    transform R
     missing 1
     x....x
     .x..x
@@ -458,6 +453,7 @@ PATTERNS = [
     """,
     """
     name x-d
+    transform R
     missing 1
     x.....x
     .x...x
@@ -496,14 +492,28 @@ PATTERNS = [
     x.....x
     """,
     """
-    name sides
+    name corner
     transform R, L, F
-    xx...xx
-    x.....x
+    xx
+    x.
+    """,
+    """
+    name corner wide
+    transform R, L, F
+    x.x
+    ...
+    x..
+    """,
+    """
+    name corner full
+    transform R, L, F
+    xxx
+    xx.
+    x..
     """,
     """
     name parallel
-    transform F
+    transform R, M, F, RM
     ..x..
     .x..x
     x..x.
