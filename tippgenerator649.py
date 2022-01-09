@@ -2,12 +2,15 @@ from tipp import Tipp
 from helper import neunundvierzig, sattolo
 from blacklist import Blacklist
 
-# Genrates "ifinite" tipps which are filtered using the playlist using an iterator
+# Generates "infinite" tipps which are filtered using the playlist using an iterator
 # style way by calling "next".
 #
 # Skipped tipps are collected in a list, call get_skipped to get them.
-class TippGenerator:
+class TippGenerator649:
     bl = Blacklist()
+    nums = 6
+    max_num = 49
+    print_nums_per_line = 7
 
     def __init__(self):
         self.current_pool = neunundvierzig()
@@ -19,7 +22,7 @@ class TippGenerator:
         self.next()
 
     def _get_tipp(self):
-        return Tipp(list(self.current_pool[:6]))
+        return Tipp(list(self.current_pool[:self.nums]), self.max_num, self.print_nums_per_line)
 
     def set_ignore_blacklist(self, ignore):
         self.ignore_blacklist = ignore

@@ -2,27 +2,28 @@
 import argparse
 
 from quicktipp import Quicktipp
+from tippgenerator649 import TippGenerator649
+from tippgenerator550 import TippGenerator550
 from histogram import Histogram, Histogram2d
 from journal import write_to_journal, find_in_journal
 
-def test_distribution(n, ignore_blacklist, two_dee):
-    q = Quicktipp()
-    q.set_ignore_blacklist(ignore_blacklist)
-    q.prepare(n)
+def test_distribution(quicktipp, n, ignore_blacklist, two_dee):
+    quicktipp.set_ignore_blacklist(ignore_blacklist)
+    quicktipp.prepare(n)
     if two_dee:
         from histogram import Histogram2d
-        histogram = Histogram2d()
+        histogram = Histogram2d(quicktipp.generator.nums, quicktipp.generator.max_num, quicktipp.generator.print_nums_per_line)
     else:
         from histogram import Histogram
         histogram = Histogram()
-    histogram.tipps(q.get())
-    histogram.skipped(q.get_skipped())
+    histogram.tipps(quicktipp.get())
+    histogram.skipped(quicktipp.get_skipped())
     histogram.show()
 
 def show_distribution(quicktipp, two_dee):
     if two_dee:
         from histogram import Histogram2d
-        histogram = Histogram2d()
+        histogram = Histogram2d(quicktipp.generator.nums, quicktipp.generator.max_num, quicktipp.generator.print_nums_per_line)
     else:
         from histogram import Histogram
         histogram = Histogram()
@@ -48,6 +49,8 @@ if __name__ =='__main__':
             help='Print distribution histogramm as 2D map of the number coordinates')
     parser.add_argument('-b', '--no-blacklist', dest='no_blacklist', action='store_true',
             help='Ignores the blacklist, kind of useless except for testing')
+    parser.add_argument('-e', '--eurojackpot', dest='eurojackpot', action='store_true',
+            help='Selects 5 of 50 for eurojackpot')
     parser.add_argument('-v', '--verbose', type=int, default='1',
                        help='Chattyness 0 to 3')
     
@@ -60,11 +63,15 @@ if __name__ =='__main__':
 
     numbers = int(numbers)
 
+    if args.eurojackpot:
+        q = Quicktipp(TippGenerator550())
+    else:
+        q = Quicktipp(TippGenerator649())
+
     if args.test_distribution:
-        test_distribution(numbers, args.no_blacklist, args.two_dee)
+        test_distribution(q, numbers, args.no_blacklist, args.two_dee)
         exit(0)
 
-    q = Quicktipp()
     q.set_ignore_blacklist(args.no_blacklist)
     q.set_verbose(args.verbose)
     q.set_print_index_numbers(not args.no_prefix)

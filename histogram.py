@@ -44,17 +44,23 @@ class Histogram(HistogramBase):
         plt.title('Skipped')
 
 class Histogram2d(HistogramBase):
+    def __init__(self, nums, max_num, print_nums_per_line):
+        self.nums = nums
+        self.max_num = max_num
+        self.print_nums_per_line = print_nums_per_line
+
     def _draw(self, name, tipps):
-        plotdata = [[0. for x in range(7)] for y in range(7)] 
+        lines_count = int(self.max_num / self.print_nums_per_line)
+        plotdata = [[0. for x in range(self.print_nums_per_line)] for y in range(lines_count)] 
         for t in tipps:
             coords = t.get_coords()
             for coord in coords:
                 plotdata[coord[1]][coord[0]] += 1.
 
         if len(tipps):
-            for i in range(7):
-                for j in range(7):
-                    plotdata[i][j] = plotdata[i][j] / float(len(tipps)) * 7.;
+            for i in range(lines_count):
+                for j in range(self.print_nums_per_line):
+                    plotdata[i][j] = plotdata[i][j] / float(len(tipps)) * self.nums;
 
         plt.pcolormesh(
                 plotdata,

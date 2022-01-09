@@ -71,6 +71,9 @@ def sattolo(a):
 def neunundvierzig():
     return list(range(1, 50))
 
+def fuenfzig():
+    return list(range(1, 51))
+
 def compare_list_recurs(x, y):
     if len(x) < 1:
         return 0
@@ -96,11 +99,11 @@ def indent(s, level = 1):
             s
             )
 
-def calc_coord(n):
-    if n < 1 or n > 49:
+def calc_coord(n, nums_per_line = 7):
+    if n < 1 or n > 50:
         raise ValueError("out of range")
-    y = int((n-1)/7)
-    return [(n - y * 7 - 1) % 7, y]
+    y = int((n-1)/nums_per_line)
+    return [(n - y * nums_per_line - 1) % nums_per_line, y]
 
 def sorted_coords(coords):
     return sorted(coords, key=cmp_to_key(compare_coords))

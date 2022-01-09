@@ -1,9 +1,10 @@
-from tippgenerator import TippGenerator
+from tippgenerator649 import TippGenerator649
+from tippgenerator550 import TippGenerator550
  
 # Provide lotto tipps (tip) for 6 of 49, german lottery
 class Quicktipp:
-    def __init__(self):
-        self.generator = TippGenerator()
+    def __init__(self, tipp_generator = TippGenerator649()):
+        self.generator = tipp_generator
         self.tipps = []
         self.skipped = []
         self.verbose = 1

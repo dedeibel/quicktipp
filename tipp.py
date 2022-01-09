@@ -7,8 +7,11 @@ from helper import compare_list_recurs, compare_coords, calc_coord
 #
 # Numbers and coords are usually stored sorted
 class Tipp:
-    def __init__(self, numbers):
+    def __init__(self, numbers, max_num = 49, print_nums_per_line = 7):
         self.num = numbers
+        self.max_num = max_num
+        self.print_nums_per_line = print_nums_per_line
+
         self.num.sort()
         self.coords = self._get_coords_sorted()
 
@@ -24,7 +27,7 @@ class Tipp:
 
     def _get_coords_sorted(self):
         return sorted(
-                [calc_coord(number) for number in self.num],
+                [calc_coord(number, self.print_nums_per_line) for number in self.num],
                 key=cmp_to_key(compare_coords))
 
     def __lt__(self, other):
@@ -39,13 +42,13 @@ class Tipp:
         if verbosity == 1:
             s += ' '.join(['%2d' % e for e in self.num])
         if verbosity > 1:
-            for n in range(1, 50):
+            for n in range(1, self.max_num + 1):
                 if n in self.num:
                     s += "%2d" % n;
                 else:
                     s += " .";
                 s += ' '
-                if n > 1 and n % 7 == 0:
+                if n > 1 and n % self.print_nums_per_line == 0:
                     s += "\n"
         return s
 
